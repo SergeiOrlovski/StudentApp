@@ -72,13 +72,14 @@ namespace StudentsApp.ViewModels
         {
             var xmlPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "", "Students.xml");
             _repo = new XmlStudentsRepository(xmlPath);
-
-            foreach (var student in _repo.GetStudents())
+            if (Students.Count == 0)
             {
-                Students.Add(new StudentsViewModel(student));
-                _index++;
+                foreach (var student in _repo.GetStudents())
+                {
+                    Students.Add(new StudentsViewModel(student));
+                    _index++;
+                }
             }
-
         }
 
         private void AddStudentClick()
