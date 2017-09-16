@@ -2,27 +2,30 @@
     x:Class="StudentsApp.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:StudentsApp.Controls"
+    xmlns:converters="clr-namespace:StudentsApp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:StudentsApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:user="clr-namespace:StudentsApp.ViewModels"
     Title="StudentsApp"
     Width="600"
-    Height="350"
+    Height="450"
     mc:Ignorable="d">
     <Window.DataContext>
         <user:StudentsMainViewModel />
     </Window.DataContext>
-    <Grid
-        Height="312"
-        Margin="0,0,3.4,-1.2"
-        VerticalAlignment="Bottom"
-        RenderTransformOrigin="0.508,0.476">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converters:SelectedStudentEnableEditPanelConverter x:Key="SelectedStudentEnableEditPanelConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid VerticalAlignment="Bottom">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="289*" />
             <ColumnDefinition Width="302*" />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="1" Margin="2.2,-1,0.4,11">
+        <StackPanel Grid.Column="1" Margin="5">
             <Button
                 x:Name="readStudentBut"
                 Width="237"
@@ -59,25 +62,28 @@
                 CommandParameter="{Binding SelectedStudent, UpdateSourceTrigger=PropertyChanged}"
                 Content="Update student" />
             <StackPanel
-                Height="175"
-                Margin="0,9,0.2,0"
-                DataContext="{Binding SelectedStudent, Mode=TwoWay}">
+                Margin="5"
+                DataContext="{Binding SelectedStudent, Mode=TwoWay}"
+                IsEnabled="{Binding ElementName=studentsListView, Path=SelectedItem, Converter={StaticResource ResourceKey=SelectedStudentEnableEditPanelConverter}}">
                 <TextBlock Text="SELECTED STUDENT:" />
                 <TextBlock Text="Last Name" />
                 <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="First Name" />
                 <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
                 <TextBlock Text="Age" />
-                <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" ToolTip="Age can take values ​​from 16 to 100" />
+                <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True}" ToolTip="Age can take values ​​from 16 to 100" />
                 <TextBlock Text="Gender (Муж/Жен)" />
                 <TextBox Text="{Binding Gender, UpdateSourceTrigger=PropertyChanged}" />
+                <!--<Label Foreground="Red" Content="{Binding (Validation.Errors)[0].ErrorContent}"/>-->
+
+                <controls:EditProperty HeaderText="First Name" Value="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <controls:EditProperty HeaderText="Age" Value="{Binding Age, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </StackPanel>
         <ListView
-            x:Name="listView"
+            x:Name="studentsListView"
             Width="285"
-            Height="312"
-            Margin="0,-1,0,0"
+            Margin="5"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             ItemsSource="{Binding Students}"
@@ -85,8 +91,22 @@
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" />
-                    <GridViewColumn DisplayMemberBinding="{Binding LastName}" Header="Last Name" />
-                    <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="First Name" />
+                    <!--<GridViewColumn DisplayMemberBinding="{Binding LastName}" Header="Last Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="First Name" />-->
+                    <GridViewColumn Width="300" Header="Name">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{1} {0}">
+                                            <Binding Path="FirstName" />
+                                            <Binding Path="LastName" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Age, StringFormat={}{0} (лет)}" Header="Age" />
                     <GridViewColumn DisplayMemberBinding="{Binding Gender}" Header="Gender" />
                 </GridView>

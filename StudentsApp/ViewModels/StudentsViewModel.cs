@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -67,6 +68,30 @@ namespace StudentsApp.ViewModels
                 _student.Gender = value;
                 OnPropertyChanged();
             }
+        }
+
+        protected override string GetColumnError(string columnName)
+        {
+            string error = null;
+
+            switch (columnName)
+            {
+                case "Age":
+                    if (Age < 16 || Age > 100)
+                    {
+                        error = "Age should be in range from 16 to 100!";
+                    }
+                    break;
+                case "FirstName":
+                    if (String.IsNullOrEmpty(FirstName))
+                    {
+                        error = "First name should not be empty!";
+                    }
+                    break;
+            }
+
+            Error = error;
+            return error;
         }
     }
 }

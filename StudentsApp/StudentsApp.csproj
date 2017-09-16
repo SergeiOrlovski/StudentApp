@@ -76,6 +76,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Controls\EditProperty.cs" />
+    <Compile Include="Converters\SelectedStudentEnableEditPanelConverter.cs" />
     <Compile Include="Models\IStudent.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Repository\StudentsRepository.cs" />
@@ -95,6 +97,10 @@
       <DependentUpon>StudentsMainView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

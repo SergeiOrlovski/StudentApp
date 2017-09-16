@@ -42,7 +42,6 @@ C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\bin\Debug\GalaSoft.MvvmLight.Platform.xml
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\bin\Debug\Microsoft.Practices.ServiceLocation.xml
-C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\StudentsApp.csprojResolveAssemblyReference.cache
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\StudentsMainView.g.cs
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\App.g.cs
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -54,3 +53,4 @@ C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\StudentsApp.csproj.GenerateResource.Cache
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\StudentsApp.exe
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\StudentsApp.pdb
+C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\Themes\Generic.baml

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StudentsApp.ViewModels
 {
-    public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged, IDataErrorInfo
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -19,6 +19,17 @@ namespace StudentsApp.ViewModels
                 var handler = PropertyChanged;
                 handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        public string this[string columnName] => GetColumnError(columnName);
+
+        public string Error { get; set; }
+
+        protected IList<string> ErrorsList = new List<string>();
+
+        protected virtual string GetColumnError(string columnName)
+        {
+            return null;
         }
     }
 }
