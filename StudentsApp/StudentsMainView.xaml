@@ -1,0 +1,96 @@
+﻿<Window
+    x:Class="StudentsApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:StudentsApp"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:user="clr-namespace:StudentsApp.ViewModels"
+    Title="StudentsApp"
+    Width="600"
+    Height="350"
+    mc:Ignorable="d">
+    <Window.DataContext>
+        <user:StudentsMainViewModel />
+    </Window.DataContext>
+    <Grid
+        Height="312"
+        Margin="0,0,3.4,-1.2"
+        VerticalAlignment="Bottom"
+        RenderTransformOrigin="0.508,0.476">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="289*" />
+            <ColumnDefinition Width="302*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="1" Margin="2.2,-1,0.4,11">
+            <Button
+                x:Name="readStudentBut"
+                Width="237"
+                Margin="30,12,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding ViewStudentsCommand}"
+                Content="View student" />
+            <Button
+                x:Name="addStudentBut"
+                Width="237"
+                Margin="30,12,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding AddStudentCommand}"
+                Content="Add student" />
+            <Button
+                x:Name="delStudentBut"
+                Width="237"
+                Margin="30,12,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding DeleteStudentCommand}"
+                CommandParameter="{Binding SelectedStudent}"
+                Content="Delete student" />
+            <Button
+                x:Name="updStudentBut"
+                Width="237"
+                Height="20"
+                Margin="30,12,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Command="{Binding UpdateStudentCommand}"
+                CommandParameter="{Binding SelectedStudent, UpdateSourceTrigger=PropertyChanged}"
+                Content="Update student" />
+            <StackPanel
+                Height="175"
+                Margin="0,9,0.2,0"
+                DataContext="{Binding SelectedStudent, Mode=TwoWay}">
+                <TextBlock Text="SELECTED STUDENT:" />
+                <TextBlock Text="Last Name" />
+                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="First Name" />
+                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Text="Age" />
+                <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged}" ToolTip="Age can take values ​​from 16 to 100" />
+                <TextBlock Text="Gender (Муж/Жен)" />
+                <TextBox Text="{Binding Gender, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+        </StackPanel>
+        <ListView
+            x:Name="listView"
+            Width="285"
+            Height="312"
+            Margin="0,-1,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            ItemsSource="{Binding Students}"
+            SelectedItem="{Binding SelectedStudent}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" />
+                    <GridViewColumn DisplayMemberBinding="{Binding LastName}" Header="Last Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="First Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Age, StringFormat={}{0} (лет)}" Header="Age" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Gender}" Header="Gender" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>
