@@ -88,6 +88,12 @@ namespace StudentsApp.ViewModels
                         error = "First name should not be empty!";
                     }
                     break;
+                case "LastName":
+                    if (String.IsNullOrEmpty(LastName))
+                    {
+                        error = "Last name should not be empty!";
+                    }
+                    break;
             }
 
             Error = error;
