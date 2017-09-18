@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using StudentsApp.Constants;
 
 namespace StudentsApp.Repository
 {
@@ -27,17 +28,17 @@ namespace StudentsApp.Repository
                 foreach (var student in students)
                 {
                     int id;
-                    var _id = student.Attribute("Id").Value ?? "Unknown";
+                    var _id = student.Attribute(Constant.Id).Value ?? "Unknown";
                     id = Convert.ToInt32(_id);
-                    var fname = student.Elements("FirstName").FirstOrDefault()?.Value ?? "Unknown";
-                    var lname = student.Elements("Last").FirstOrDefault()?.Value ?? "Unknown";
-                    var ageStr = student.Elements("Age").FirstOrDefault()?.Value ?? "Unknown";
+                    var lname = student.Elements(Constant.LastName).FirstOrDefault()?.Value ?? "Unknown";
+                    var fname = student.Elements(Constant.FirstName).FirstOrDefault()?.Value ?? "Unknown";
+                    var ageStr = student.Elements(Constant.Age).FirstOrDefault()?.Value ?? "Unknown";
                     int age;
                     if (!int.TryParse(ageStr, out age))
                     {
                         age = 20;
                     }
-                    var genderStr = student.Elements("Gender").FirstOrDefault()?.Value ?? "Unknown";
+                    var genderStr = student.Elements(Constant.Gender).FirstOrDefault()?.Value ?? "Unknown";
                     int gender;
                     if(!int.TryParse(genderStr, out gender))
                     {
@@ -49,7 +50,7 @@ namespace StudentsApp.Repository
                         _gender = "Муж";
                     }
                     else { _gender = "Жен"; }
-                    result.Add(new Student(id, fname, lname, age, _gender));
+                    result.Add(new Student(id,lname,fname, age, _gender));
                 }
             }
             return result;
@@ -57,18 +58,18 @@ namespace StudentsApp.Repository
 
         public override void AddStudent(IStudent student)
         {
-            var newStudentElement = new XElement("Student");
-            newStudentElement.Add(new XAttribute("Id", student.Id));
-            newStudentElement.Add(new XElement("FirstName", student.FirstName));
-            newStudentElement.Add(new XElement("Last", student.LastName));
-            newStudentElement.Add(new XElement("Age", student.Age));
+            var newStudentElement = new XElement(Constant.StudentElementName);
+            newStudentElement.Add(new XAttribute(Constant.Id, student.Id));
+            newStudentElement.Add(new XElement(Constant.FirstName, student.FirstName));
+            newStudentElement.Add(new XElement(Constant.LastName, student.LastName));
+            newStudentElement.Add(new XElement(Constant.Age, student.Age));
             if (student.Gender == "Муж")
             {
-                newStudentElement.Add(new XElement("Gender", 0));
+                newStudentElement.Add(new XElement(Constant.Gender, 0));
             }
             else
             {
-                newStudentElement.Add(new XElement("Gender", 1));
+                newStudentElement.Add(new XElement(Constant.Gender, 1));
             }
 
             _doc.Root?.Add(newStudentElement);
@@ -78,20 +79,20 @@ namespace StudentsApp.Repository
         public override void UpdateStudent(IStudent student)
         {
             XElement xroot = _doc.Root;
-            foreach (XElement xr in xroot.Elements("Student"))
+            foreach (XElement xr in xroot.Elements(Constant.StudentElementName))
             {
-                string id = xr.Attribute("Id").Value;
+                string id = xr.Attribute(Constant.Id).Value;
                 if (id == student.Id.ToString())
                 {
-                    xr.Attribute("Id").Value = student.Id.ToString();
-                    xr.Element("FirstName").Value = student.FirstName;
-                    xr.Element("Last").Value = student.LastName;
-                    xr.Element("Age").Value = student.Age.ToString();
+                    xr.Attribute(Constant.Id).Value = student.Id.ToString();
+                    xr.Element(Constant.FirstName).Value = student.FirstName;
+                    xr.Element(Constant.LastName).Value = student.LastName;
+                    xr.Element(Constant.Age).Value = student.Age.ToString();
                     if(student.Gender == "Муж")
                     {
-                        xr.Element("Gender").Value = String.Format("0");
+                        xr.Element(Constant.Gender).Value = String.Format("0");
                     }
-                    else { xr.Element("Gender").Value = String.Format("1"); }
+                    else { xr.Element(Constant.Gender).Value = String.Format("1"); }
                     break;
                 }
             }
@@ -101,9 +102,9 @@ namespace StudentsApp.Repository
         public override void DeleteStudent(IStudent student)
         {
             XElement xroot = _doc.Root;
-            foreach(XElement xr in xroot.Elements("Student"))
+            foreach(XElement xr in xroot.Elements(Constant.StudentElementName))
             {
-                string id = xr.Attribute("Id").Value;
+                string id = xr.Attribute(Constant.Id).Value;
                 if(id == student.Id.ToString())
                 {
                     xr.Remove();

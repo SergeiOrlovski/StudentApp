@@ -33,7 +33,7 @@ namespace StudentsApp.Controls
             set { SetValue(HeaderTextProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for HeaderText.  This enables animation, styling, binding, etc...
+        
         public static readonly DependencyProperty HeaderTextProperty =
             DependencyProperty.Register("HeaderText", typeof(string), typeof(EditProperty), new PropertyMetadata(String.Empty));
 
@@ -45,7 +45,7 @@ namespace StudentsApp.Controls
             set { SetValue(ValueProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for Value.  This enables animation, styling, binding, etc...
+        
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(string), typeof(EditProperty), new PropertyMetadata(String.Empty));
 
@@ -57,7 +57,7 @@ namespace StudentsApp.Controls
             set { SetValue(ErrorTextProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for ErrorText.  This enables animation, styling, binding, etc...
+        
         public static readonly DependencyProperty ErrorTextProperty =
             DependencyProperty.Register("ErrorText", typeof(string), typeof(EditProperty), new PropertyMetadata(String.Empty));
 

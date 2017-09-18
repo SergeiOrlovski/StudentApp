@@ -61,9 +61,15 @@
     <Gender>0</Gender>
   </Student>
   <Student Id="10">
-    <FirstName>New LastName</FirstName>
-    <Last>New FirstName</Last>
-    <Age>0</Age>
+    <FirstName>Сидор</FirstName>
+    <Last>Иван</Last>
+    <Age>96</Age>
+    <Gender>0</Gender>
+  </Student>
+  <Student Id="11">
+    <FirstName>Анастасия</FirstName>
+    <Last>Шпак</Last>
+    <Age>20</Age>
     <Gender>1</Gender>
   </Student>
 </Students>

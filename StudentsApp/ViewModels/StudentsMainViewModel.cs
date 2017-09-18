@@ -86,7 +86,7 @@ namespace StudentsApp.ViewModels
         {
             if (Students.Count != 0)
             {
-                var newStudent = new Student(_index++, "New LastName", "New FirstName", 0, "");
+                var newStudent = new Student(_index++, "LastName", "FirstName", 16, "");
                 _repo.AddStudent(newStudent);
                 Students.Add(new StudentsViewModel(newStudent));
             }

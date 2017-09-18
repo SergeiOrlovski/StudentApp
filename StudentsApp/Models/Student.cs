@@ -8,11 +8,11 @@
         public int Age { get; set; }
         public string Gender { get; set; }
 
-        public Student(int id,string fname, string lname, int age, string gender)
+        public Student(int id, string lname, string fname, int age, string gender)
         {
             Id = id;
-            FirstName = fname;
             LastName = lname;
+            FirstName = fname;
             Age = age;
             Gender = gender;
         }

@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\DelegateCommand.cs" />
+    <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controls\EditProperty.cs" />
     <Compile Include="Converters\SelectedStudentEnableEditPanelConverter.cs" />
     <Compile Include="Models\IStudent.cs" />
