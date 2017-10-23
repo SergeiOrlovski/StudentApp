@@ -79,13 +79,21 @@
     <Compile Include="Constants\Constants.cs" />
     <Compile Include="Controls\EditProperty.cs" />
     <Compile Include="Converters\SelectedStudentEnableEditPanelConverter.cs" />
+    <Compile Include="ErrorView.xaml.cs">
+      <DependentUpon>ErrorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\IStudent.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Repository\StudentsRepository.cs" />
     <Compile Include="Repository\XmlStudentsRepository.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\ErrorViewModel.cs" />
     <Compile Include="ViewModels\StudentsMainViewModel.cs" />
     <Compile Include="ViewModels\StudentsViewModel.cs" />
+    <Page Include="ErrorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StudentsMainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

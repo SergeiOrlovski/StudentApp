@@ -55,3 +55,5 @@ C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\StudentsApp.pdb
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\Themes\Generic.baml
 C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\StudentsApp.csprojResolveAssemblyReference.cache
+C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\ErrorView.g.cs
+C:\Users\personal\Documents\Visual Studio 2015\Projects\StudentsApp\StudentsApp\obj\Debug\ErrorView.baml

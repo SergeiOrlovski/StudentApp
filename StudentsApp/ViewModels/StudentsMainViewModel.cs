@@ -5,10 +5,11 @@ using System.Windows.Input;
 using StudentsApp.Commands;
 using System.Reflection;
 using StudentsApp.Models;
-using System;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Data;
-using System.Globalization;
-using System.Windows.Media;
 
 namespace StudentsApp.ViewModels
 {
@@ -22,9 +23,11 @@ namespace StudentsApp.ViewModels
         public ICommand AddStudentCommand { get; private set; }
         public ICommand DeleteStudentCommand { get; private set; }
         public ICommand UpdateStudentCommand { get; private set; }
+        public ICommand SelectedStudentsChangedCommand { get; private set; }
 
 
         private StudentsViewModel _selectedStudent;
+        private IList<StudentsViewModel> _selectedStudents;
 
         public StudentsViewModel SelectedStudent
         {
@@ -32,6 +35,16 @@ namespace StudentsApp.ViewModels
             set
             {
                 _selectedStudent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IList<StudentsViewModel> SelectedStudents
+        {
+            get { return _selectedStudents; }
+            set
+            {
+                _selectedStudents = value;
                 OnPropertyChanged();
             }
         }
@@ -44,8 +57,15 @@ namespace StudentsApp.ViewModels
             ViewStudentsCommand = new DelegateCommand(p => true, p => ReadStudentsClick());
             DeleteStudentCommand = new DelegateCommand(p => true, p => DeleteStudentsClick());
             UpdateStudentCommand = new DelegateCommand(p => true, p => UpdateStudentsClick());
+            SelectedStudentsChangedCommand = new DelegateCommand(p => true, OnSelectedStudentsChanged);
 
         }
+
+        private void OnSelectedStudentsChanged(object parameter)
+        {
+            SelectedStudents = ((IEnumerable)parameter).OfType<StudentsViewModel>().ToList();
+        }
+
 
         private void UpdateStudentsClick()
         {
@@ -58,14 +78,29 @@ namespace StudentsApp.ViewModels
 
         private void DeleteStudentsClick()
         {
-            if (SelectedStudent != null)
+            if (SelectedStudent != null || SelectedStudents.Count > 0)
             {
-                var selitems = SelectedStudent;
-                var delStudent = Students.Remove(selitems);
-                _repo.DeleteStudent(new Student(selitems.Id, selitems.LastName, selitems.FirstName, selitems.Age, selitems.Gender));
+                if (SelectedStudents.Count > 1)
+                {
+                    foreach (var student in SelectedStudents)
+                    {
+                        DeleteStudent(student);
+                    }
+                }
+                else
+                {
+                    DeleteStudent(SelectedStudent);
+                }
+
             }
+        }
 
-
+        private void DeleteStudent(StudentsViewModel student)
+        {
+            Students.Remove(student);
+            _repo.DeleteStudent(new Student(student.Id, student.LastName, student.FirstName, student.Age, student.Gender));
+            Students.Clear();
+            ReadStudentsClick();
         }
 
         private void ReadStudentsClick()
@@ -77,7 +112,7 @@ namespace StudentsApp.ViewModels
                 foreach (var student in _repo.GetStudents())
                 {
                     Students.Add(new StudentsViewModel(student));
-                    _index++;
+                    _index=student.Id;
                 }
             }
         }
@@ -86,9 +121,9 @@ namespace StudentsApp.ViewModels
         {
             if (Students.Count != 0)
             {
-                var newStudent = new Student(_index++, "LastName", "FirstName", 16, "");
-                _repo.AddStudent(newStudent);
+                var newStudent = new Student(Students.Count, "LastName", "FirstName", 16, "Муж");
                 Students.Add(new StudentsViewModel(newStudent));
+                _repo.AddStudent(newStudent);
             }
 
         }

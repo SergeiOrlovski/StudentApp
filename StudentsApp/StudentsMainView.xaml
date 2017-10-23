@@ -5,9 +5,11 @@
     xmlns:controls="clr-namespace:StudentsApp.Controls"
     xmlns:converters="clr-namespace:StudentsApp.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:StudentsApp"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:user="clr-namespace:StudentsApp.ViewModels"
+    
     Title="StudentsApp"
     Width="600"
     Height="360"
@@ -17,10 +19,10 @@
     </Window.DataContext>
     <Window.Resources>
         <ResourceDictionary>
-            <converters:SelectedStudentEnableEditPanelConverter x:Key="SelectedStudentEnableEditPanelConverter" />
+            <converters:SelectedStudentEnableEditPanelConverter x:Key="SelectedStudentEnableEditPanelConverter"/>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid VerticalAlignment="Bottom">
+    <Grid Margin="0,0" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="289*" />
             <ColumnDefinition Width="302*" />
@@ -60,41 +62,36 @@
                 VerticalAlignment="Top"
                 Command="{Binding UpdateStudentCommand}"
                 CommandParameter="{Binding SelectedStudent, UpdateSourceTrigger=PropertyChanged}"
-                Content="Update student" />
+                Content="Save student" />
             <StackPanel
                 Height="194"
                 Margin="5,5,5.4,5"
                 DataContext="{Binding SelectedStudent, Mode=TwoWay}"
-                IsEnabled="{Binding SelectedItem, Converter={StaticResource ResourceKey=SelectedStudentEnableEditPanelConverter}, ElementName=studentsListView}">
+                IsEnabled="{Binding SelectedItem, Converter={StaticResource ResourceKey=SelectedStudentEnableEditPanelConverter}, ElementName=StudentsListView}">
                 <TextBlock Text="SELECTED STUDENT:" />
-                <!--<TextBlock Text="Last Name" />
-                <TextBox Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Text="First Name" />
-                <TextBox Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBlock Text="Age" />
-                <TextBox Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True, ValidatesOnDataErrors=True}" ToolTip="Age can take values ​​from 16 to 100" />
-                <TextBlock Text="Gender (Муж/Жен)" />
-                <TextBox Text="{Binding Gender, UpdateSourceTrigger=PropertyChanged}" />
-                -->
-                <!--<Label Foreground="Red" Content="{Binding (Validation.Errors)[0].ErrorContent}"/>-->
-
                 <controls:EditProperty HeaderText="Last Name" Value="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <controls:EditProperty
                     Margin="5,5,4.8,5"
                     HeaderText="First Name"
                     Value="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 <controls:EditProperty HeaderText="Age" Value="{Binding Age, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <controls:EditProperty HeaderText="Gender" Value="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <controls:EditProperty HeaderText="Gender(Only Муж/Жен)" Value="{Binding Gender, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </StackPanel>
         </StackPanel>
         <ListView
-            x:Name="studentsListView"
+            x:Name="StudentsListView"
             Width="Auto"
             Margin="0,0,0.4,0.4"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            ItemsSource="{Binding Students}"
-            SelectedItem="{Binding SelectedStudent}">
+            AlternationCount="2"
+            ItemsSource="{Binding Students}" 
+            SelectedItem="{Binding SelectedStudent}" >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding Path=SelectedStudentsChangedCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=SelectedItems}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <ListView.View>
                 <GridView>
                     <GridViewColumn
@@ -117,7 +114,7 @@
                     </GridViewColumn>
                     <GridViewColumn
                         Width="Auto"
-                        DisplayMemberBinding="{Binding Age, StringFormat={}{0} (лет)}"
+                        DisplayMemberBinding="{Binding Age, StringFormat={}{0} лет}"
                         Header="Age" />
                     <GridViewColumn
                         Width="Auto"

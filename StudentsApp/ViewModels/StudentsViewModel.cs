@@ -1,13 +1,5 @@
-﻿using GalaSoft.MvvmLight;
-using StudentsApp.Models;
+﻿using StudentsApp.Models;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StudentsApp.ViewModels
 {
@@ -92,6 +84,19 @@ namespace StudentsApp.ViewModels
                     if (String.IsNullOrEmpty(LastName))
                     {
                         error = "Last name should not be empty!";
+                    }
+                    break;
+                case "Gender":
+                    if (String.IsNullOrEmpty(Gender))
+                    {
+                        error = "Gender should not be empty!";
+                    }
+                    else
+                    {
+                        if (Gender!="Муж"&&Gender!="Жен")
+                        {
+                            error = "Gender should be 'Муж' or 'Жен'!";
+                        }
                     }
                     break;
             }

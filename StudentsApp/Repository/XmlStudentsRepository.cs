@@ -1,9 +1,13 @@
 ﻿using StudentsApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Input;
 using System.Xml.Linq;
 using StudentsApp.Constants;
+using StudentsApp.ViewModels;
 
 namespace StudentsApp.Repository
 {
@@ -11,11 +15,24 @@ namespace StudentsApp.Repository
     {
         private readonly XDocument _doc;
         private readonly string _fileName;
-        
+
         public XmlStudentsRepository(string fileName)
-        {
-            _fileName = fileName;
-            _doc = XDocument.Load(fileName);
+        {   
+            try
+            {
+                _fileName = fileName;
+                _doc = XDocument.Load(_fileName);
+            }
+            catch(FileNotFoundException e)
+            {
+                var errorView = new ErrorView(ApplicationCommands.Close, "Repository file is not found.");
+                ShowModel(errorView);
+            }
+            catch (Exception e)
+            {
+                var errorView = new ErrorView(new ErrorViewModel(o => Application.Current.Shutdown()) { ErrorText = e.Message });
+                ShowModel(errorView);
+            }
         }
 
         public override IList<IStudent> GetStudents()
@@ -39,11 +56,7 @@ namespace StudentsApp.Repository
                         age = 20;
                     }
                     var genderStr = student.Elements(Constant.Gender).FirstOrDefault()?.Value ?? "Unknown";
-                    int gender;
-                    if(!int.TryParse(genderStr, out gender))
-                    {
-                        gender = 1;
-                    }
+                    int gender=Convert.ToInt32(genderStr);
                     string _gender;
                     if (gender == 0)
                     {
@@ -63,7 +76,7 @@ namespace StudentsApp.Repository
             newStudentElement.Add(new XElement(Constant.FirstName, student.FirstName));
             newStudentElement.Add(new XElement(Constant.LastName, student.LastName));
             newStudentElement.Add(new XElement(Constant.Age, student.Age));
-            if (student.Gender == "Муж")
+            if (student.Gender == "")
             {
                 newStudentElement.Add(new XElement(Constant.Gender, 0));
             }
@@ -108,10 +121,25 @@ namespace StudentsApp.Repository
                 if(id == student.Id.ToString())
                 {
                     xr.Remove();
-                    break;
-                }
-            }
+                    SetAttributeIdValue();
+                }  
+            } 
             _doc.Save(_fileName);
+        }
+
+        private void SetAttributeIdValue()
+        {
+            int valueId = 0;
+            XElement xroot = _doc.Root;
+            foreach (XElement xr in xroot.Elements(Constant.StudentElementName))
+            {
+                xr.SetAttributeValue("Id", valueId++);
+            }
+        }
+
+        private void ShowModel(Window window)
+        {
+            window.ShowDialog();
         }
     }
 }

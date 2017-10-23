@@ -19,8 +19,8 @@
     <Gender>1</Gender>
   </Student>
   <Student Id="3">
-    <FirstName>Smith</FirstName>
-    <Last>John</Last>
+    <FirstName>John</FirstName>
+    <Last>Smith</Last>
     <Age>22</Age>
     <Gender>0</Gender>
   </Student>
@@ -43,33 +43,9 @@
     <Gender>1</Gender>
   </Student>
   <Student Id="7">
-    <FirstName>Sergei</FirstName>
-    <Last>Orlovskiy</Last>
-    <Age>27</Age>
-    <Gender>0</Gender>
-  </Student>
-  <Student Id="8">
-    <FirstName>Анна</FirstName>
-    <Last>Седокова</Last>
-    <Age>21</Age>
-    <Gender> Жен</Gender>
-  </Student>
-  <Student Id="9">
-    <FirstName>Симон</FirstName>
-    <Last>Ленко</Last>
-    <Age>25</Age>
-    <Gender>0</Gender>
-  </Student>
-  <Student Id="10">
-    <FirstName>Сидор</FirstName>
-    <Last>Иван</Last>
-    <Age>96</Age>
-    <Gender>0</Gender>
-  </Student>
-  <Student Id="11">
-    <FirstName>Анастасия</FirstName>
-    <Last>Шпак</Last>
+    <FirstName>Александр</FirstName>
+    <Last>Иванов</Last>
     <Age>20</Age>
-    <Gender>1</Gender>
+    <Gender>0</Gender>
   </Student>
 </Students>
